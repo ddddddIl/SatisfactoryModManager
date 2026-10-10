@@ -34,6 +34,32 @@ for common issues and their solutions.
 * Downloads are cached in `%LOCALAPPDATA%\ficsit\downloadCache\`
 * Logs are stored in `%LOCALAPPDATA%\SatisfactoryModManager\logs`
 
+### Installing the game in a location SMM does not find
+
+If Satisfactory is installed somewhere the launchers SMM looks at do not know about,
+SMM can still manage it. Close SMM, open `%APPDATA%\SatisfactoryModManager\settings.json`,
+and list the install folder in `manualInstalls`:
+
+```json
+{
+  "manualInstalls": [
+    {
+      "path": "D:\\Games\\Satisfactory",
+      "branch": "stable"
+    }
+  ]
+}
+```
+
+* `path` is the folder containing the game, the one with `FactoryGameSteam.exe` in it
+* `branch` is either `stable` or `experimental`, and may be left out for `stable`
+* Adding or removing an entry needs a restart of SMM to take effect
+
+Once listed, the install behaves like any other one: it shows up in the install picker,
+mods can be applied to it, and it can be started from SMM.
+If SMM can no longer find a game at a listed path, that install is reported as invalid
+until the entry is removed.
+
 ## Development
 
 ### Dependencies

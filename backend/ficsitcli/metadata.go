@@ -69,6 +69,13 @@ func (f *ficsitCLI) initRemoteServerInstallationsMetadata() {
 				continue
 			}
 		}
+		if settings.IsManualInstallPath(installation.Path) {
+			// A manually added install that could not be found is gone, not a server that failed to connect
+			f.installationMetadata.Store(installation.Path, installationMetadata{
+				State: InstallStateInvalid,
+			})
+			continue
+		}
 		installationsToCheck = append(installationsToCheck, installation)
 	}
 

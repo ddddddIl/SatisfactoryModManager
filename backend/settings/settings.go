@@ -12,6 +12,7 @@ import (
 	wailsRuntime "github.com/wailsapp/wails/v2/pkg/runtime"
 
 	"github.com/satisfactorymodding/SatisfactoryModManager/backend/common"
+	installCommon "github.com/satisfactorymodding/SatisfactoryModManager/backend/installfinders/common"
 	"github.com/satisfactorymodding/SatisfactoryModManager/backend/utils"
 )
 
@@ -21,6 +22,28 @@ type SavedModFilters struct {
 	Order         string        `json:"order"`
 	Filter        string        `json:"filter"`
 	TagSearchMode TagSearchMode `json:"tagSearchMode,omitempty"`
+}
+
+// ManualInstall is a game install the user pointed SMM at in the settings file,
+// instead of it being found by a launcher
+// Branch is stored as a plain string, so that the settings file stays easy to write by hand
+// The rest of the information is derived from the game files on every startup,
+// so that it stays correct when the game is updated
+// See installfinders.MakeManualInstallation
+type ManualInstall struct {
+	Path   string `json:"path"`
+	Branch string `json:"branch,omitempty"`
+}
+
+// IsManualInstallPath reports whether the user added this path by hand
+// Paths are compared the same way the install finders compare them
+func IsManualInstallPath(path string) bool {
+	for _, manualInstall := range Settings.ManualInstalls {
+		if installCommon.OsPathEqual(manualInstall.Path, path) {
+			return true
+		}
+	}
+	return false
 }
 
 type View string
@@ -57,6 +80,8 @@ type settings struct {
 	ModFilters   SavedModFilters `json:"modFilters,omitempty"`
 
 	RemoteNames map[string]string `json:"remoteNames,omitempty"`
+
+	ManualInstalls []ManualInstall `json:"manualInstalls,omitempty"`
 
 	QueueAutoStart      bool                `json:"queueAutoStart"`
 	IgnoredUpdates      map[string][]string `json:"ignoredUpdates,omitempty"`
@@ -97,6 +122,8 @@ var Settings = &settings{
 	},
 
 	RemoteNames: map[string]string{},
+
+	ManualInstalls: []ManualInstall{},
 
 	QueueAutoStart:      true,
 	IgnoredUpdates:      map[string][]string{},

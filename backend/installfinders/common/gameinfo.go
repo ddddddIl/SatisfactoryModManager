@@ -107,3 +107,19 @@ func getGameSavedDir(gamePath string, install InstallType, platform Platform) st
 	}
 	return filepath.Join(gamePath, "FactoryGame", "Saved")
 }
+
+// GetClientExecutablePath returns the path of the game executable that starts the game, if there is one
+// Server installs are excluded, as starting a server is not the same as playing the game
+// It returns an empty string when the install cannot be started this way
+func GetClientExecutablePath(path string) string {
+	for _, info := range gameInfo {
+		if info.installType != InstallTypeWindowsClient {
+			continue
+		}
+		executablePath := filepath.Join(path, info.executable)
+		if _, err := os.Stat(executablePath); err == nil {
+			return executablePath
+		}
+	}
+	return ""
+}
