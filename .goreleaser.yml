@@ -30,7 +30,10 @@ builds:
       # The default args
       - -s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}}
       # Auto-update mode
-      - -X main.updateMode=standalone
+      # Snapshot builds have a version below the latest release, so they would replace themselves
+      # with that release shortly after being started. They exist to test unmerged changes,
+      # so they must not update themselves
+      - -X main.updateMode={{ if .IsSnapshot }}none{{ else }}standalone{{ end }}
 
     flags:
       - -- # Marker for task to interpret remaining arguments as CLI_ARGS
@@ -60,7 +63,8 @@ builds:
       # The default args
       - -s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}}
       # Auto-update mode
-      - -X main.updateMode=appimage
+      # Snapshot builds must not replace themselves, see the standalone build above
+      - -X main.updateMode={{ if .IsSnapshot }}none{{ else }}appimage{{ end }}
 
     flags:
       - -- # Marker for task to interpret remaining arguments as CLI_ARGS
@@ -85,7 +89,8 @@ builds:
       # The default args
       - -s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}}
       # Auto-update mode
-      - -X main.updateMode=nsis
+      # Snapshot builds must not replace themselves, see the standalone build above
+      - -X main.updateMode={{ if .IsSnapshot }}none{{ else }}nsis{{ end }}
 
     flags:
       - -- # Marker for task to interpret remaining arguments as CLI_ARGS

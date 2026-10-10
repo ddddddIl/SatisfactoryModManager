@@ -21,6 +21,10 @@ jobs:
 
       - name: Update translation keys
         working-directory: frontend
+        env:
+          TOLGEE_KEY: ${{ secrets.TOLGEE_KEY }}
+        # Forks do not have the Tolgee key, and have no translations to sync
+        if: ${{ env.TOLGEE_KEY != '' }}
         run: |
-          npm run translations:compare -- -ak ${{ secrets.TOLGEE_KEY }}
-          npm run translations:sync -- -ak ${{ secrets.TOLGEE_KEY }}
+          npm run translations:compare -- -ak "$TOLGEE_KEY"
+          npm run translations:sync -- -ak "$TOLGEE_KEY"

@@ -12,6 +12,7 @@ on:
 jobs:
   build:
     strategy:
+      fail-fast: false
       matrix:
         platform:
           - os: linux
@@ -24,7 +25,10 @@ jobs:
             # as a fix for appimage crashes on distros using versions newer than that when displaying emoji
             # Running webkit2gtk-4.1 built against this newer version should be safe on older distros too,
             # since the struct causing the crash is larger in newer versions
-            container: ghcr.io/${{ github.repository_owner }}/smm-builder:ubuntu22.04
+            # Container image names have to be lowercase, but a repository owner may not be,
+            # so the upstream owner is used explicitly. Forks can pull this public image,
+            # and only the upstream repository builds it (see builder-image.yml)
+            container: ghcr.io/satisfactorymodding/smm-builder:ubuntu22.04
           - os: windows
             # Using windows-2022 for now because NSIS is missing on windows-2025 runners
             runs-on: windows-2022
