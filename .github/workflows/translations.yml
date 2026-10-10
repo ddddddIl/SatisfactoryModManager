@@ -17,10 +17,10 @@ jobs:
 
       - name: Install dependencies
         working-directory: frontend
-        run: pnpm install
+        run: npm install
 
       - name: Update translation keys
         working-directory: frontend
         run: |
-          pnpm translations:compare -ak ${{ secrets.TOLGEE_KEY }}
-          pnpm translations:sync -ak ${{ secrets.TOLGEE_KEY }}
+          npm run translations:compare -- -ak ${{ secrets.TOLGEE_KEY }}
+          npm run translations:sync -- -ak ${{ secrets.TOLGEE_KEY }}

@@ -14,7 +14,7 @@ if (fs.existsSync(i18nDir)) {
 }
 
 console.log('Pulling translations');
-child_process.execSync(`pnpm translations:pull -ak ${process.env.VITE_TOLGEE_API_KEY}`, { stdio: 'inherit' });
+child_process.execSync(`npm run translations:pull -- --api-key ${process.env.VITE_TOLGEE_API_KEY}`, { stdio: 'inherit' });
 
 const langs = fs.readdirSync(i18nDir).map(file => file.replace('.json', ''));
 console.log('Languages:', langs.join(', '));

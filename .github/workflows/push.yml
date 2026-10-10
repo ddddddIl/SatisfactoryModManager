@@ -52,10 +52,10 @@ jobs:
       
       - name: Install dependencies
         working-directory: frontend
-        run: pnpm install
+        run: npm install
 
       - name: Lint
         working-directory: frontend
         run: |
-          pnpm lint
-          pnpm check
+          npm run lint
+          npm run check

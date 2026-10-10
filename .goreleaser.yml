@@ -12,8 +12,8 @@ before:
     - touch frontend/build/.gitkeep
 
     - wails generate module -tags webkit2_41 # I have no idea why, but if the tag isn't set here, the final artifact will depend on webkit2gtk-4.0
-    - pnpm -C frontend install
-    - pnpm -C frontend build
+    - npm -C frontend ci
+    - npm -C frontend run build
 
 ### Build
 

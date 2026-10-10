@@ -65,7 +65,7 @@ until the entry is removed.
 ### Dependencies
 
 * [Go](https://go.dev/doc/install) (the version in [the Setup CI action `go-version`](./.github/actions/setup/action.yml))
-* [pnpm](https://pnpm.io/installation)
+* [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 * [nodejs](https://nodejs.org/en/download/) (the version in [the Setup CI action `node-version`](./.github/actions/setup/action.yml))
 * Wails (to install, execute the `run` command from [the Setup CI action's `Install Wails` step](./.github/actions/setup/action.yml))
 * IDE of Choice. Goland or VSCode suggested.
@@ -99,8 +99,8 @@ The command line output will also include a localhost URL you can visit in your 
 Make sure you don't already have a copy of the application running or the command will silently fail.
 
 Although `wails dev` should run these commands for you under normal circumstances,
-you may need to run `pnpm graphql-codegen` in the `frontend` directory to update the code generated from the SMR API,
-or run `pnpm translations` to update the translation data.
+you may need to run `npm run graphql-codegen` in the `frontend` directory to update the code generated from the SMR API,
+or run `npm run translations` to update the translation data.
 
 ### IDE Configuration
 
@@ -136,8 +136,8 @@ golangci-lint run --fix
 You may also need to manually run the frontend linter. First, navigate to the `frontend` directory, then run:
 
 ```bash
-pnpm run format
-pnpm run check
+npm run format
+npm run check
 ```
 
 ### Assorted Development Helpers

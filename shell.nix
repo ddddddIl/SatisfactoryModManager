@@ -12,7 +12,6 @@ in
 		in
 		with pkgs.buildPackages; [
 			wails'
-			pnpm_8
 			vite
 			wrapGAppsHook3
 		];

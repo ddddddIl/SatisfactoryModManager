@@ -92,5 +92,8 @@
     "typescript": "~5.3.3",
     "vite": "^5.4.21"
   },
-  "type": "module"
+  "type": "module",
+  "overrides": {
+    "@urql/core": "6.0.1"
+  }
 }
